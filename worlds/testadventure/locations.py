@@ -37,7 +37,7 @@ LOCATION_NAME_TO_ID = {
     "Treasure Red": 13,
     "Treasure Pink": 14,
     "Treasure Yellow": 15,
-    "Treasrue Blue": 16,
+    "Treasure Blue": 16,
 
     "Overworld 2 Chest 1": 17,
     "Overworld 2 Chest 2": 18
@@ -100,7 +100,7 @@ def create_regular_locations(world: TAWorld) -> None:
     #Treasures
     world.get_region("Treasure Red Room").add_locations(get_location_names_with_ids(["Treasure Red"]), TALocation)
     world.get_region("Treasure Pink Room").add_locations(get_location_names_with_ids(["Treasure Pink"]), TALocation)
-    world.get_region("Treasure Yellow Room").add_locations(get_location_names_with_ids(["Treasure Pink"]), TALocation)
+    world.get_region("Treasure Yellow Room").add_locations(get_location_names_with_ids(["Treasure Yellow"]), TALocation)
     world.get_region("Treasure Blue Room").add_locations(get_location_names_with_ids(["Treasure Blue"]), TALocation)
 
     #Misc Overworld Treasures

@@ -72,7 +72,8 @@ def create_all_items(world: TAWorld) -> None:
         world.create_item("Dungeon Key 2"),
         world.create_item("Dungeon Key 3"),
     ]
-
+    
+    number_of_items = len(itempool)
 
     #Fillers
     number_of_unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))

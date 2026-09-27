@@ -66,11 +66,12 @@ def connect_regions(world: TAWorld) -> None:
     world.get_region("Overworld 1").connect(world.get_region("Dungeon 2_1"), "Dungeon 2 Entrance")
     world.get_region("Overworld 1").connect(world.get_region("Final Boss Room"), "Final Boss Gate")
 
+    #Overworld 2
     world.get_region("Overworld 2").connect(world.get_region("Dungeon 3"), "Dungeon 3 Entrance")
     world.get_region("Overworld 2").connect(world.get_region("Dungeon 4"), "Dungeon 4 Entrance")
     world.get_region("Overworld 2").connect(world.get_region("Dungeon 5_1"), "Dungeon 5 Entrance")
 
-    #Overworld 2
+    #Treasure Rooms
     world.get_region("Overworld 2").connect(world.get_region("Treasure Red Room"), "Treasure Red Entrance")
     world.get_region("Overworld 2").connect(world.get_region("Treasure Pink Room"), "Treasure Pink Entrance")
     world.get_region("Overworld 2").connect(world.get_region("Treasure Yellow Room"), "Treasure Yellow Entrance")

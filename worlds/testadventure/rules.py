@@ -35,18 +35,18 @@ def set_all_entrance_rules(world: TAWorld) -> None:
     set_rule(world.get_entrance("Overworld Bridge 1"), has_red_key)
     set_rule(world.get_entrance("Overworld Bridge 2"), has_blue_key)
     set_rule(world.get_entrance("Final Boss Gate"), has_all_crystals)
-    set_rule(world.get_entrance("Dungeon 2 Entrance"), lambda state: state.has("Dungeon Key 1"), world.player)
+    set_rule(world.get_entrance("Dungeon 2 Entrance"), lambda state: state.has("Dungeon Key 1", world.player))
 
     #Overworld 2
     set_rule(world.get_entrance("Dungeon 3 Entrance"), has_red_key)
-    set_rule(world.get_entrance("Dungeon 4 Entrance"), lambda state: state.has("Dungeon Key 3"), world.player)
+    set_rule(world.get_entrance("Dungeon 4 Entrance"), lambda state: state.has("Dungeon Key 3", world.player))
     set_rule(world.get_entrance("Treasure Red Entrance"), has_red_key)
     set_rule(world.get_entrance("Treasure Pink Entrance"), has_pink_key)
     set_rule(world.get_entrance("Treasure Yellow Entrance"), has_yellow_key)
     set_rule(world.get_entrance("Treasure Blue Entrance"), has_blue_key)
 
     #Dungeon Connections
-    set_rule(world.get_entrance("Dungeon 2 Gate"), lambda state: state.has("Dungeon Key 2"), world.player)
+    set_rule(world.get_entrance("Dungeon 2 Gate"), lambda state: state.has("Dungeon Key 2", world.player))
     set_rule(world.get_entrance("Dungeon 5 Missable"), has_red_key)
 
 

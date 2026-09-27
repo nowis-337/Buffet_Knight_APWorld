@@ -5,21 +5,21 @@ from worlds.AutoWorld import World
 
 from . import items, locations, options, regions, rules, web_world
 
-class TAWorld(World):
+class BKWorld(World):
     """
-    Test Adventure World Description Here
+    Buffet Knight World Description Here
     """
-    game = "Test Adventure"
+    game = "Buffet Knight"
 
-    web = web_world.TAWebWorld()
+    web = web_world.BKWebWorld()
 
-    options_dataclass = options.TAOptions
-    options: options.TAOptions  # Common mistake: This has to be a colon (:), not an equals sign (=).
+    options_dataclass = options.BKOptions
+    options: options.BKOptions  # Common mistake: This has to be a colon (:), not an equals sign (=).
 
     location_name_to_id = locations.LOCATION_NAME_TO_ID
     item_name_to_id = items.ITEM_NAME_TO_ID
 
-    origin_region_name = "Overworld 1"
+    origin_region_name = "Overworld_1"
 
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
@@ -31,7 +31,7 @@ class TAWorld(World):
     def create_items(self) -> None:
         items.create_all_items(self)
 
-    def create_item(self, name: str) -> items.TAItem:
+    def create_item(self, name: str) -> items.BKItem:
         return items.create_item_with_correct_classification(self, name)
 
     def get_filler_item_name(self) -> str:
@@ -42,4 +42,4 @@ class TAWorld(World):
     # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
-        return self.options.as_dict("hard_mode")
+        return self.options.as_dict("goal")
