@@ -16,22 +16,22 @@ def set_all_rules(world: BKWorld) -> None:
     set_completion_condition(world)
 
 def set_all_entrance_rules(world: BKWorld) -> None:
-    
+
     #====== Skills ========
     def skill_bomb(state: CollectionState) -> bool:
-        return state.has("Chilli Bomb", world.player)
+        return state.has_any(("Chilli Bomb"), world.player)
 
     def skill_heal(state: CollectionState) -> bool:
-        return state.has("Heartful Fruit", world.player)
+        return state.has_any(("Heartful Fruit"), world.player)
 
     def skill_shock(state: CollectionState) -> bool:
-        return state.has("Lemon Shock", world.player)
+        return state.has_any(("Lemon Shock"), world.player)
     
     def skill_bounce(state: CollectionState) -> bool:
-        return state.has("Bouncy Gum", world.player)
+        return state.has_any(("Bouncy Gum"), world.player)
     
     def skill_shell(state: CollectionState) -> bool:
-        return state.has("Chitin Shell", world.player)
+        return state.has_any(("Chitin Shell"), world.player)
 
     def all_skills_base(state: CollectionState) -> bool:
         return skill_bomb(state) and skill_heal(state) and skill_shock(state) and skill_bounce(state) and skill_shell(state)
@@ -44,14 +44,14 @@ def set_all_entrance_rules(world: BKWorld) -> None:
         return state.has_all(("Ambrosial Herb", "Fiery Pepper", "Celestial Sugar", "M.S.G.", "Abyssal Salt"), world.player)
 
     def reached_pre_end_game(state: CollectionState) -> bool:
-       return state.has("Demon_Chef_Defeated", world.player) 
+       return state.has_all(("Gastronomancy_Potion_Get", "Demon_Chef_Defeated"), world.player) 
     
     #====== Area Access ========
     def can_access_overworld_2(state: CollectionState) -> bool:
         return state.has_any(("Chilli Bomb", "Chitin Shell", "Bouncy Gum", "Reaper's Meal Ticket"), world.player)
 
     def can_access_overworld_3(state: CollectionState) -> bool:
-        return skill_bomb(state)
+        return state.has_any(("Chilli Bomb"), world.player)
 
     def can_access_casino_dungeon(state: CollectionState) -> bool:
         return skill_bomb(state)
@@ -69,11 +69,11 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     def casino_endgame_access(state: CollectionState) -> bool:
             #Accesible in Advanced Mode
             #if world.options.goal == 0: return False
+            if not reached_pre_end_game(state): return False
             if not all_ingredients_collected(state): return False
-            if not all_skills_base(state): return False #Progress through Casino Dungeon
-            if not all_skill_upgrades(state): return False #Progress through Casino Dungeon
-            if not state.has("Gastronomancy_Potion_Get", world.player): return False #Witch End 
-            if not state.has("Forbidden_Insight_Get", world.player): return False #All Relics
+            if not all_skills_base(state): return False
+            if not all_skill_upgrades(state): return False
+            if not state.has("Forbidden Insight", world.player): return False
             return True
 
     set_rule(world.get_entrance("Overworld_2_Connection"), can_access_overworld_2)
@@ -106,25 +106,23 @@ def set_all_entrance_rules(world: BKWorld) -> None:
 
 
 def set_all_location_rules(world: BKWorld) -> None:
-    
+    ore_array = ["Mineral Ore 1","Mineral Ore 2","Mineral Ore 3","Mineral Ore 4","Mineral Ore 5","Mineral Ore 6","Mineral Ore 7","Mineral Ore 8","Mineral Ore 9"]
      #====== Skills ========
     def skill_bomb(state: CollectionState) -> bool:
-        return state.has("Chilli Bomb", world.player)
+        return state.has_any(("Chilli Bomb"), world.player)
 
     def skill_heal(state: CollectionState) -> bool:
-        return state.has("Heartful Fruit", world.player)
+        return state.has_any(("Heartful Fruit"), world.player)
 
     def skill_shock(state: CollectionState) -> bool:
-        return state.has("Lemon Shock", world.player)
+        return state.has_any(("Lemon Shock"), world.player)
     
     def skill_bounce(state: CollectionState) -> bool:
-        return state.has("Bouncy Gum", world.player)
+        return state.has_any(("Bouncy Gum"), world.player)
     
     def skill_shell(state: CollectionState) -> bool:
-        return state.has("Chitin Shell", world.player)
-
-    ore_array = ["Mineral Ore 1","Mineral Ore 2","Mineral Ore 3","Mineral Ore 4","Mineral Ore 5","Mineral Ore 6","Mineral Ore 7","Mineral Ore 8","Mineral Ore 9"]
-
+        return state.has_any(("Chitin Shell"), world.player)
+           
     def blacksmith_ore_2(state: CollectionState) -> bool:
         ore_count = 0
         for item in ore_array:
@@ -153,12 +151,12 @@ def set_all_location_rules(world: BKWorld) -> None:
     set_rule(world.get_location("Swamp_Ingredients_Gathered"), all_ingredients_collected)
 
     set_rule(world.get_location("Swamp_Potion_Upgrade_1"), lambda state: state.has("Fruitful Essence", world.player))
-    set_rule(world.get_location("Swamp_Potion_Upgrade_2"), lambda state: state.has("Molten Essence", world.player))
-    set_rule(world.get_location("Swamp_Potion_Upgrade_3"), lambda state: state.has("Bubble Gum Essence", world.player))
-    set_rule(world.get_location("Swamp_Potion_Upgrade_4"), lambda state: state.has("Voltaic Essence", world.player))
-    set_rule(world.get_location("Swamp_Potion_Upgrade_5"), lambda state: state.has("Ocean Essence", world.player))
+    set_rule(world.get_location("Swamp_Potion_Upgrade_2"), lambda state: state.has("Molten Potion", world.player))
+    set_rule(world.get_location("Swamp_Potion_Upgrade_3"), lambda state: state.has("Bubble Gum Potion", world.player))
+    set_rule(world.get_location("Swamp_Potion_Upgrade_4"), lambda state: state.has("Voltaic Potion", world.player))
+    set_rule(world.get_location("Swamp_Potion_Upgrade_5"), lambda state: state.has("Oceanic Potion", world.player))
 
-    set_rule(world.get_location("Wasteland_Field_1_North"), lambda state: state.has_any(("Witch's Brew", "Bouncy Gum"), world.player))
+    set_rule(world.get_location("Wasteland_Field_1_North"), lambda state: state.has_any(("Chilli Bomb", "Bouncy Gum"), world.player))
     set_rule(world.get_location("Wasteland_Field_2_South"), skill_bomb)
 
     set_rule(world.get_location("Forest_Field_Pond"), skill_shock)
@@ -205,9 +203,9 @@ def set_all_location_rules(world: BKWorld) -> None:
 
 def set_all_event_rules(world: BKWorld) -> None:
 
-    set_rule(world.get_location("Event_Desert_Dungeon_Entry_Permission"), lambda state: state.has("Red Juicy Tomato", world.player))
-    set_rule(world.get_location("Event_Gastronomancy_Potion_Get"), lambda state: state.has_all(("Demon_Chef_Defeated", "Gastronomancy Essence"), world.player))
-    set_rule(world.get_location("Event_Forbidden_Insight_Get"), lambda state: state.has_all(("Relic Fragment 1","Relic Fragment 2","Relic Fragment 3","Relic Fragment 4","Relic Fragment 5"), world.player))
+    set_rule(world.get_location("Desert_Dungeon_Entry_Permission"), lambda state: state.has("Red Juicy Tomato", world.player))
+    set_rule(world.get_location("Gastronomancy_Potion_Get"), lambda state: state.has_all(("Demon_Chef_Defeated", "Gastronomancy Essence"), world.player))
+    set_rule(world.get_location("Forbidden_Insight_Get"), lambda state: state.has_all(("Relic Fragment 1","Relic Fragment 2","Relic Fragment 3","Relic Fragment 4","Relic Fragment 5"), world.player))
 
 
 def set_completion_condition(world: BKWorld) -> None:

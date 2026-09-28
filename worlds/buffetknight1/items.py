@@ -36,7 +36,7 @@ ITEM_NAME_TO_ID = {
     "Temple Key 1": 26,
     "Temple Key 2": 27,
     "Storage Key": 28,
-    #"Prison Key": 29, #FIXED
+    #"Prison Key": 29,
     "Tower Master Key": 30,
     "Factory Key": 31,
     "Fruitful Essence": 32,
@@ -45,13 +45,13 @@ ITEM_NAME_TO_ID = {
     "Bubble Gum Essence": 35,
     "Ocean Essence": 36,
     "Gastronomancy Essence": 37,
-    #"Gastronomancy Potion": 38, #FIXED
+    #"Gastronomancy Potion": 38,
     "Red Juicy Tomato": 39,
     "Meat Effigy": 40,
     "Sanctuary Pass": 41,
     "Bag of Crunchy Chips": 42,
-    "Brulee Wing Toy 1": 43,
-    #"Brulee Wing Toy 2": 44, #UNUSED
+    "Brulee Wing Toy": 43,
+    "Brulee Wing Toy": 44,
     "Mixer Tank Toy": 45,
     "Note in a Bottle": 46,
     "Jolly Meal Delivery": 47,
@@ -153,7 +153,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Iron Knife":  ItemClassification.useful,
     "Stainless Steel Knife": ItemClassification.progression | ItemClassification.useful,
     "Ultimaxcalibur(TM)": ItemClassification.useful,
-    #"Forbidden Insight": ItemClassification.progression, #FIXED ITEM
+    #"Forbidden Insight": ItemClassification.progression,
     "Mysterious Fried Chicken": ItemClassification.progression,
     "Mineral Ore 1": ItemClassification.progression,
     "Mineral Ore 2": ItemClassification.progression,
@@ -167,7 +167,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Temple Key 1": ItemClassification.progression,
     "Temple Key 2": ItemClassification.progression,
     "Storage Key": ItemClassification.progression,
-    "Prison Key": ItemClassification.progression,
+    #"Prison Key": ItemClassification.progression,
     "Tower Master Key": ItemClassification.progression,
     "Factory Key": ItemClassification.progression,
     "Fruitful Essence": ItemClassification.progression,
@@ -176,22 +176,22 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Bubble Gum Essence": ItemClassification.progression,
     "Ocean Essence": ItemClassification.progression,
     "Gastronomancy Essence": ItemClassification.progression,
-    #"Gastronomancy Potion": ItemClassification.progression, #FIXED ITEM
+    #"Gastronomancy Potion": ItemClassification.progression,
     "Red Juicy Tomato": ItemClassification.progression,
     "Meat Effigy": ItemClassification.progression,
     "Sanctuary Pass": ItemClassification.useful,
     "Bag of Crunchy Chips": ItemClassification.progression,
-    "Brulee Wing Toy 1": ItemClassification.useful,
-    #"Brulee Wing Toy 2": ItemClassification.useful, #UNUSED ITEM
+    "Brulee Wing Toy": ItemClassification.useful,
+    "Brulee Wing Toy": ItemClassification.useful,
     "Mixer Tank Toy": ItemClassification.useful,
     "Note in a Bottle": ItemClassification.progression,
     "Jolly Meal Delivery": ItemClassification.progression,
     "Stinky Berry": ItemClassification.progression,
-    "Fruitful Potion": ItemClassification.progression,
-    "Molten Potion": ItemClassification.progression,
-    "Bubble Gum Potion": ItemClassification.progression,
-    "Voltaic Potion": ItemClassification.progression,
-    "Oceanic Potion": ItemClassification.progression,
+    "Fruitful Potion": ItemClassification.useful,
+    "Molten Potion": ItemClassification.useful,
+    "Bubble Gum Potion": ItemClassification.useful,
+    "Voltaic Potion": ItemClassification.useful,
+    "Oceanic Potion": ItemClassification.useful,
     "Peashooter": ItemClassification.useful,
     "Shish-Kebab": ItemClassification.useful,
     "Seasoning Splash": ItemClassification.useful,
@@ -277,12 +277,11 @@ class BKItem(Item):
 
 
 def get_random_filler_item_name(world: BKWorld) -> str:
-    # #Trap Items Later?
-    # if len(item_filler_list) == 0:
-    #     # If run out of filler items, recreate list and pick from random again
-    #     create_filler_item_list()
+    #Trap Items Later?
+    if len(item_filler_list) == 0:
+        # If run out of filler items, recreate list and pick from random again
+        create_filler_item_list()
     randomIndex = world.random.randint(0, len(item_filler_list) - 1)
-    return item_filler_list[randomIndex]
     return item_filler_list.pop(randomIndex)
 
 

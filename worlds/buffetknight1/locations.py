@@ -33,8 +33,8 @@ LOCATION_NAME_TO_ID = {
     #Swamp and Witch
     "Swamp_Ingredients_Gathered": 15,
     "Swamp_Witch_Intoduction": 16,
-    #"Swamp_Witch_Relics_Gathered": 17, #FIXED LOCATION - Forbidden Insight
-    #"Swamp_Witch_End_Game": 18, #FIXED LOCATION - Gastronomancy Potion 
+    #"Swamp_Witch_Relics_Gathered": 17,
+    #"Swamp_Witch_End_Game": 18,
 
     "Swamp_Potion_Upgrade_1": 19,
     "Swamp_Potion_Upgrade_2": 20,
@@ -136,7 +136,7 @@ LOCATION_NAME_TO_ID = {
 
     #Bistropolis
     "City_Vending_Machine": 89,
-    #"City_Fast_Food_Purchase": 90, #UNUSED
+    "City_Fast_Food_Purchase": 90,
     "City_Fast_Food_Quest": 91,
     "City_Arcade": 92,
     "City_Factory_Cleaner": 93,
@@ -174,7 +174,7 @@ LOCATION_NAME_TO_ID = {
 
     "Tower_Basement_Garbage": 116,
     "Tower_Basement_Centre": 117,
-    "Tower_Basement_Jail": 118,
+    #"Tower_Basement_Jail": 118,
 
     "Tower_Top_Storeroom": 119,
     "Tower_Top_Bar": 120,
@@ -212,7 +212,7 @@ def create_regular_locations(world: BKWorld) -> None:
         #Town
         "Town_Shop_1", "Town_Shop_2", "Town_Shop_3", "Town_Blacksmith_Weapon_Upgrade_1", "Town_Blacksmith_Weapon_Upgrade_2",
         "Town_Blacksmith_Helmet_Upgrade_1", "Town_Blacksmith_Helmet_Upgrade_2", "Chef_Town_Crossroads",
-        "Town_Field_1_Goblins", "Town_Field_2_Ledge", "Town_Cave",
+        "Town_Field_1_Goblins", "Town_Field_2_Ledge", "Town_Cave"
 
         #Swamp
         "Swamp_Ingredients_Gathered", "Swamp_Witch_Intoduction", #"Swamp_Witch_Relics_Gathered", "Swamp_Witch_End_Game",
@@ -240,11 +240,11 @@ def create_regular_locations(world: BKWorld) -> None:
 
         #City
         "City_Field_1_Waterfall", "City_Field_2_Goblins", "City_Restaurant", "City_Field_3_Lighthouse", "City_Sewers_North", "City_Sewers_Lab",
-        "City_Vending_Machine", "City_Fast_Food_Quest", "City_Arcade", "City_Factory_Cleaner", #"City_Fast_Food_Purchase",
+        "City_Vending_Machine", "City_Fast_Food_Purchase", "City_Fast_Food_Quest", "City_Arcade", "City_Factory_Cleaner",
 
         #Beach
         "Beach_Field_Crossroads", "Beach_Field_1", "Beach_Field_2_Campfire", "Beach_Field_3_Secretary", "Beach_Cave_1",
-        "Fishing_Prize",
+        "Fishing_Prize"
 
 
 
@@ -263,7 +263,7 @@ def create_regular_locations(world: BKWorld) -> None:
 
     #---- Desert -----
     world.get_region("Dungeon_Desert").add_locations(get_location_names_with_ids([
-        "Desert_Dungeon_Vent_1", "Desert_Dungeon_Vent_2", "Desert_Dungeon_Key_1", "Desert_Dungeon_Cave", "Desert_Dungeon_Key_2",
+        "Desert_Dungeon_Vent_1", "Desert_Dungeon_Vent_2", "Desert_Dungeon_Key_1", "Desert_Dungeon_Cave", "Desert_Dungeon_Key_2"
         ]), BKLocation)
     world.get_region("Dungeon_Desert_2").add_locations(get_location_names_with_ids([
         "Desert_Dungeon_Rubble", "Desert_Dungeon_Basement",
@@ -297,7 +297,7 @@ def create_regular_locations(world: BKWorld) -> None:
     #---- Tower -----
     world.get_region("Dungeon_Tower").add_locations(get_location_names_with_ids([
         "Tower_Ground_Centre", "Tower_Ground_Boss_Key",
-        "Tower_Basement_Garbage", "Tower_Basement_Centre", "Tower_Basement_Jail",
+        "Tower_Basement_Garbage", "Tower_Basement_Centre", #"Tower_Basement_Jail",
         "Tower_Top_Storeroom", "Tower_Top_Bar", "Tower_Top_Bathroom",
         ]), BKLocation)
     world.get_region("Dungeon_Tower_Boss").add_locations(get_location_names_with_ids([
@@ -335,12 +335,15 @@ def create_regular_locations(world: BKWorld) -> None:
 
     
 def create_events(world: BKWorld) -> None:
-    world.get_region("Overworld_1").add_event("Event_Desert_Dungeon_Entry_Permission", "Desert_Dungeon_Entry_Permission", location_type = BKLocation, item_type = items.BKItem)
+    world.get_region("Overworld_1").add_event("Desert_Dungeon_Entry_Permission", "Desert_Dungeon_Entry_Permission", location_type = BKLocation, item_type = items.BKItem)
 
-    world.get_region("Dungeon_Tower_Boss").add_event("Event_Demon_Chef_Defeated", "Demon_Chef_Defeated", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Overworld_1").add_event("Event_Gastronomancy_Potion_Get", "Gastronomancy_Potion_Get", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Overworld_1").add_event("Event_Forbidden_Insight_Get", "Forbidden_Insight_Get", location_type = BKLocation, item_type = items.BKItem)
+    world.get_region("Dungeon_Tower_Boss").add_event("Demon_Chef_Defeated", "Demon_Chef_Defeated", location_type = BKLocation, item_type = items.BKItem)
+    world.get_region("Overworld_1").add_event("Gastronomancy_Potion_Get", "Gastronomancy_Potion_Get", location_type = BKLocation, item_type = items.BKItem)
+    world.get_region("Overworld_1").add_event("Forbidden_Insight_Get", "Forbidden_Insight_Get", location_type = BKLocation, item_type = items.BKItem)
 
-    world.get_region("Endgame").add_event("Event_Endgame_Reached", "Endgame_Reached", location_type = BKLocation, item_type = items.BKItem)
+    
+    
+    
+    world.get_region("Endgame").add_event("Endgame_Reached", "Endgame_Reached", location_type = BKLocation, item_type = items.BKItem)
 
 

@@ -19,7 +19,7 @@ class BKWorld(World):
     location_name_to_id = locations.LOCATION_NAME_TO_ID
     item_name_to_id = items.ITEM_NAME_TO_ID
 
-    origin_region_name = "Overworld_1"
+    origin_region_name = "Overworld 1"
 
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
