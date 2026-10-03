@@ -48,36 +48,27 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     
     #====== Area Access ========
     def can_access_overworld_2(state: CollectionState) -> bool:
-        if world.options.hard_mode:
-            return state.has_any(("Chilli Bomb", "Chitin Shell", "Bouncy Gum", "Reaper's Meal Ticket",
-                                  "Dungeon_2_Access",
-                                  ), world.player)
-        else:
-            return state.has_any(("Chilli Bomb", "Chitin Shell", "Bouncy Gum", "Reaper's Meal Ticket", ), world.player)
+        return state.has_any(("Chilli Bomb", "Chitin Shell", "Bouncy Gum", "Reaper's Meal Ticket"), world.player)
 
     def can_access_overworld_3(state: CollectionState) -> bool:
-        # Geyser Access to Sky Area
-        if world.options.hard_mode:
-            return True
-        else:
-            return skill_bomb(state)
+        return skill_bomb(state)
 
     def can_access_casino_dungeon(state: CollectionState) -> bool:
         return skill_bomb(state)
 
     def can_access_secret_dungeon(state: CollectionState) -> bool:
-        #Cheese, Reach Music Rocks, Reach stone pillars
         return can_access_overworld_2(state) and skill_bomb(state) and skill_shock(state)
 
     #===== Reaching the End ========
     def swamp_endgame_access(state: CollectionState) -> bool:
-           if world.options.goal == 1: return False
+           #if world.options.goal == 1: return False
            if not reached_pre_end_game(state): return False
            if not state.has("Gastronomancy Essence", world.player): return False
-           return True
+           return False
 
     def casino_endgame_access(state: CollectionState) -> bool:
             #Accesible in Advanced Mode
+            #if world.options.goal == 0: return False
             if not all_ingredients_collected(state): return False
             if not all_skills_base(state): return False #Progress through Casino Dungeon
             if not all_skill_upgrades(state): return False #Progress through Casino Dungeon
@@ -99,6 +90,7 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     set_rule(world.get_entrance("Tower_Dungeon_Boss_Door"), lambda state: state.has("Tower Master Key", world.player))
 
     set_rule(world.get_entrance("Casino_Dungeon_Entrance"), can_access_casino_dungeon)
+    set_rule(world.get_entrance("Secret_Dungeon_Entrance"), can_access_secret_dungeon)
 
     set_rule(world.get_entrance("Castle_Vault_Entrance"), skill_bomb)
     set_rule(world.get_entrance("Hermit_Cave_Entrance"), lambda state: state.has_any(("Stainless Steel Knife", "Ultimaxcalibur(TM)"), world.player))
@@ -106,17 +98,11 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     set_rule(world.get_entrance("Poison_Cave_Entrance"), lambda state: state.has_all(("Chilli Bomb", "Heartful Fruit"), world.player))
     set_rule(world.get_entrance("Desert_Pit_Entrance"), skill_bomb)
     set_rule(world.get_entrance("Sky_Nest_Entrance"), lambda state: state.has_all(("Chilli Bomb", "Bouncy Gum"), world.player))
-
+    set_rule(world.get_entrance("Sewer_Den_Entrance"), skill_shock)
+    set_rule(world.get_entrance("Sea_Clam_Cave_Entrance"), skill_shell)
 
     set_rule(world.get_entrance("Swamp_Endgame_Entrance"), swamp_endgame_access)
     set_rule(world.get_entrance("Casino_Endgame_Entrance"), casino_endgame_access)
-
-    #Secret Dungeon
-    if world.options.exclude_secret:
-        set_rule(world.get_entrance("Secret_Dungeon_Entrance"), lambda state: state.has("Victory_Accessible", world.player))
-    else:
-        set_rule(world.get_entrance("Secret_Dungeon_Entrance"), can_access_secret_dungeon)
-
 
 
 def set_all_location_rules(world: BKWorld) -> None:
@@ -162,6 +148,9 @@ def set_all_location_rules(world: BKWorld) -> None:
 
     set_rule(world.get_location("Town_Blacksmith_Weapon_Upgrade_1"), blacksmith_ore_2)
     set_rule(world.get_location("Town_Blacksmith_Weapon_Upgrade_2"), blacksmith_ore_5)
+    set_rule(world.get_location("Town_Cave"), skill_bomb)
+
+    set_rule(world.get_location("Swamp_Ingredients_Gathered"), all_ingredients_collected)
 
     set_rule(world.get_location("Swamp_Potion_Upgrade_1"), lambda state: state.has("Fruitful Essence", world.player))
     set_rule(world.get_location("Swamp_Potion_Upgrade_2"), lambda state: state.has("Molten Essence", world.player))
@@ -170,114 +159,49 @@ def set_all_location_rules(world: BKWorld) -> None:
     set_rule(world.get_location("Swamp_Potion_Upgrade_5"), lambda state: state.has("Ocean Essence", world.player))
 
     set_rule(world.get_location("Wasteland_Field_1_North"), lambda state: state.has_any(("Witch's Brew", "Bouncy Gum"), world.player))
+    set_rule(world.get_location("Wasteland_Field_2_South"), skill_bomb)
 
     set_rule(world.get_location("Forest_Field_Pond"), skill_shock)
     set_rule(world.get_location("Forest_Field_Tree"), lambda state: state.has_any(("Chilli Bomb", "Bouncy Gum"), world.player))
-
+    set_rule(world.get_location("Forest_Field_Cave"), skill_bomb)
+    set_rule(world.get_location("Forest_Field_Civet"), skill_bomb)
+    set_rule(world.get_location("Forest_Field_Beach"), skill_bomb)
 
     set_rule(world.get_location("Desert_Field_Pond"), lambda state: state.has_any(("Chilli Bomb", "Witch's Brew"), world.player))
     set_rule(world.get_location("Desert_Field_Ledge"), lambda state: state.has_any(("Chilli Bomb", "Bouncy Gum"), world.player))
     set_rule(world.get_location("Desert_Field_Centre_Buried"), skill_bomb)
+    set_rule(world.get_location("Desert_Tunnel"), skill_bomb)
+    set_rule(world.get_location("Desert_Challenge_Cave"), lambda state: state.has_all(("Chilli Bomb", "Molten Potion"), world.player))
 
     set_rule(world.get_location("Desert_Camp_Leader"), lambda state: state.has("Red Juicy Tomato", world.player))
 
     set_rule(world.get_location("Mountain_Field_1_Tree"), lambda state: state.has_any(("Chilli Bomb", "Bouncy Gum"), world.player))
     set_rule(world.get_location("Mountain_Field_2_Ledge"), lambda state: state.has_all(("Chilli Bomb", "Bouncy Gum"), world.player))
 
+    set_rule(world.get_location("Mountain_Field_Cave"), skill_bomb)
+    set_rule(world.get_location("Mountain_Challenge_Cave"), lambda state: state.has_all(("Bubble Gum Potion", "Bouncy Gum"), world.player))
+
     set_rule(world.get_location("Sky_Town_Cafe"), lambda state: state.has("Stinky Berry", world.player))
     set_rule(world.get_location("Sky_House"), lambda state: state.has("Bag of Crunchy Chips", world.player))
 
     set_rule(world.get_location("City_Field_1_Waterfall"), lambda state: state.has_all(("Chilli Bomb", "Chitin Shell"), world.player))
     set_rule(world.get_location("City_Hermit_Weapon_Upgrade"), blacksmith_ore_9)
+    #set_rule(world.get_location("City_Field_3_Lighthouse"), skill_shock)
 
+    set_rule(world.get_location("City_Sewers_North"), skill_shock)
     set_rule(world.get_location("City_Sewers_Lab"), lambda state: state.has("Witch's Brew", world.player))
     set_rule(world.get_location("Factory_Dungeon_5_Upper_Floor"), skill_bomb)
 
+    set_rule(world.get_location("Beach_Field_Crossroads"), skill_bomb)
     set_rule(world.get_location("Beach_Field_1"), skill_bounce)
     set_rule(world.get_location("Beach_Field_3_Secretary"), lambda state: state.has("Jolly Meal Delivery", world.player))
+    set_rule(world.get_location("Beach_Cave_1"), skill_bomb)
+    set_rule(world.get_location("Fishing_Prize"), skill_shock)
 
+    set_rule(world.get_location("Stomach_Dungeon_Cave"), skill_bomb)
 
     set_rule(world.get_location("Tower_Ground_Boss_Key"), lambda state: state.has("Storage Key", world.player))
 
-
-    #Advanced Logic
-    if world.options.hard_mode:
-        set_rule(world.get_location("Beach_Field_Crossroads"), True)
-        set_rule(world.get_location("Fishing_Prize"), lambda state: state.has_any(("Lemon Shock","Dungeon_3_Access"), world.player))
-        set_rule(world.get_location("City_Sewers_North"), lambda state: state.has_any(("Lemon Shock","Dungeon_3_Access"), world.player))
-        
-        set_rule(world.get_location("Forest_Field_Cave"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_location("Forest_Field_Civet"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_location("Forest_Field_Beach"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_location("Town_Cave"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_location("Wasteland_Field_2_South"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_location("Desert_Tunnel"), lambda state: state.has_any(("Chilli Bomb","Dungeon_2_Access"), world.player))
-        set_rule(world.get_entrance("Sea_Clam_Cave_Entrance"), lambda state: state.has_any(("Chitin Shell","Dungeon_5_Access"), world.player))
-
-        def mountain_challenge_cave_access(state) -> bool:
-            access = False
-            treasure = True
-            if state.has_all(("Bubble Gum Potion", "Bouncy Gum"), world.player):
-                access = True
-                treasure = True
-            if state.has("Ultimaxcalibur(TM)", world.player):
-                access = True
-                treasure = True
-            if state.has("Dungeon_3_Access", world.player): #Maybe too difficult?
-                access = True
-                #treasure = True
-            return access and treasure
-        
-        set_rule(world.get_location("Mountain_Challenge_Cave"), mountain_challenge_cave_access)
-
-        def desert_challenge_cave_access(state) -> bool:
-            access = False
-            treasure = False
-            if state.has_all(("Chilli Bomb", "Molten Potion"), world.player):
-                access = True
-                treasure = True
-            if state.has("Chilli Bomb", world.player): treasure = True
-            if state.has("Dungeon_2_Access", world.player): access = True
-            if state.has("Ultimaxcalibur(TM)", world.player): access = True
-
-            return access and treasure
-        
-        set_rule(world.get_location("Desert_Challenge_Cave"), desert_challenge_cave_access)
-
-        #Unchanged 
-        set_rule(world.get_location("Mountain_Field_Cave"), skill_bomb)
-        set_rule(world.get_location("Beach_Cave_1"), skill_bomb)
-        set_rule(world.get_entrance("Sewer_Den_Entrance"), skill_shock)
-
-    else:
-        set_rule(world.get_location("Beach_Field_Crossroads"), skill_bomb)
-        set_rule(world.get_location("Fishing_Prize"), skill_shock)
-        set_rule(world.get_location("City_Sewers_North"), skill_shock)
-        set_rule(world.get_location("Forest_Field_Cave"), skill_bomb)
-        set_rule(world.get_location("Forest_Field_Civet"), skill_bomb)
-        set_rule(world.get_location("Forest_Field_Beach"), skill_bomb)
-        set_rule(world.get_location("Town_Cave"), skill_bomb)
-        set_rule(world.get_location("Wasteland_Field_2_South"), skill_bomb)
-        set_rule(world.get_location("Desert_Tunnel"), skill_bomb)
-        set_rule(world.get_location("Mountain_Field_Cave"), skill_bomb)
-        set_rule(world.get_location("Beach_Cave_1"), skill_bomb)
-        set_rule(world.get_entrance("Sewer_Den_Entrance"), skill_shock)
-        set_rule(world.get_entrance("Sea_Clam_Cave_Entrance"), skill_shell)
-
-        set_rule(world.get_location("Mountain_Challenge_Cave"), lambda state: state.has_all(("Bubble Gum Potion", "Bouncy Gum"), world.player))
-        set_rule(world.get_location("Desert_Challenge_Cave"), lambda state: state.has_all(("Chilli Bomb", "Molten Potion"), world.player))
-
-    #Exclude locations
-    set_rule(world.get_location("Stomach_Dungeon_Cave"), lambda state: state.has("Victory_Accessible", world.player))
-    set_rule(world.get_location("Stomach_Dungeon_Intestines"), lambda state: state.has("Victory_Accessible", world.player))
-    
-    #Fixed locations
-    #set_rule(world.get_location("Swamp_Ingredients_Gathered"), all_ingredients_collected)
-    #set_rule(world.get_location("Swamp_Witch_Relics_Gathered"), lambda state: state.has_all(["Relic Fragment 1", "Relic Fragment 2", "Relic Fragment 3", "Relic Fragment 4", "Relic Fragment 5", "Relic Fragment 6"], world.player))
-    #set_rule(world.get_location("Swamp_Witch_End_Game"), lambda state: state.has_all(["Endgame_Reached", "Gastronomancy Essence"], world.player))
-
-    #Completely disabled
-    #set_rule(world.get_location("City_Fast_Food_Purchase"), True)
 
 def set_all_event_rules(world: BKWorld) -> None:
 

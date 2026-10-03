@@ -33,8 +33,8 @@ LOCATION_NAME_TO_ID = {
     #Swamp and Witch
     "Swamp_Ingredients_Gathered": 15,
     "Swamp_Witch_Intoduction": 16,
-    "Swamp_Witch_Relics_Gathered": 17, #FIXED LOCATION - Forbidden Insight
-    "Swamp_Witch_End_Game": 18, #FIXED LOCATION - Gastronomancy Potion 
+    #"Swamp_Witch_Relics_Gathered": 17, #FIXED LOCATION - Forbidden Insight
+    #"Swamp_Witch_End_Game": 18, #FIXED LOCATION - Gastronomancy Potion 
 
     "Swamp_Potion_Upgrade_1": 19,
     "Swamp_Potion_Upgrade_2": 20,
@@ -136,7 +136,7 @@ LOCATION_NAME_TO_ID = {
 
     #Bistropolis
     "City_Vending_Machine": 89,
-    "City_Fast_Food_Purchase": 90, #UNUSED
+    #"City_Fast_Food_Purchase": 90, #UNUSED
     "City_Fast_Food_Quest": 91,
     "City_Arcade": 92,
     "City_Factory_Cleaner": 93,
@@ -199,7 +199,6 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 
 def create_all_locations(world: BKWorld) -> None:
     create_regular_locations(world)
-    create_secret_locations(world)
     create_events(world)
 
 
@@ -216,10 +215,8 @@ def create_regular_locations(world: BKWorld) -> None:
         "Town_Field_1_Goblins", "Town_Field_2_Ledge", "Town_Cave",
 
         #Swamp
-        "Swamp_Witch_Intoduction",
+        "Swamp_Ingredients_Gathered", "Swamp_Witch_Intoduction", #"Swamp_Witch_Relics_Gathered", "Swamp_Witch_End_Game",
         "Swamp_Potion_Upgrade_1", "Swamp_Potion_Upgrade_2", "Swamp_Potion_Upgrade_3", "Swamp_Potion_Upgrade_4", "Swamp_Potion_Upgrade_5",
-        #"Swamp_Ingredients_Gathered",
-        #"Swamp_Witch_Relics_Gathered", "Swamp_Witch_End_Game",
 
         #Wasteland
         "Wasteland_Field_1_North", "Wasteland_Gold_Pond", "Wasteland_Field_2_South",
@@ -307,7 +304,10 @@ def create_regular_locations(world: BKWorld) -> None:
         "Tower_Boss_Essence", "Tower_Relic",
         ]), BKLocation)
 
-
+    #---- Secret -----
+    world.get_region("Secret_Dungeon").add_locations(get_location_names_with_ids([
+        "Secret_Gallery", "Secret_End",
+        ]), BKLocation)
     
     #Extras
     world.get_region("Castle_Vault").add_locations(get_location_names_with_ids([
@@ -333,13 +333,6 @@ def create_regular_locations(world: BKWorld) -> None:
         "Beach_Clam_Cave_Essence", "Beach_Clam_Cave_Relic",
         ]), BKLocation)
 
-
-def create_secret_locations(world: BKWorld) -> None:
-    #---- Secret -----
-    world.get_region("Secret_Dungeon").add_locations(get_location_names_with_ids([
-        "Secret_Gallery", "Secret_End",
-        ]), BKLocation)
-
     
 def create_events(world: BKWorld) -> None:
     world.get_region("Overworld_1").add_event("Event_Desert_Dungeon_Entry_Permission", "Desert_Dungeon_Entry_Permission", location_type = BKLocation, item_type = items.BKItem)
@@ -349,11 +342,5 @@ def create_events(world: BKWorld) -> None:
     world.get_region("Overworld_1").add_event("Event_Forbidden_Insight_Get", "Forbidden_Insight_Get", location_type = BKLocation, item_type = items.BKItem)
 
     world.get_region("Endgame").add_event("Event_Endgame_Reached", "Endgame_Reached", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Endgame").add_event("Event_Victory_Accessible", "Victory_Accessible", location_type = BKLocation, item_type = items.BKItem)
 
-
-    world.get_region("Dungeon_Desert").add_event("Event_Dungeon_2_Access", "Dungeon_2_Access", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Dungeon_Sky").add_event("Event_Dungeon_3_Access", "Dungeon_3_Access", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Dungeon_Factory").add_event("Event_Dungeon_4_Access", "Dungeon_4_Access", location_type = BKLocation, item_type = items.BKItem)
-    world.get_region("Dungeon_Ocean").add_event("Event_Dungeon_5_Access", "Dungeon_5_Access", location_type = BKLocation, item_type = items.BKItem)
 
